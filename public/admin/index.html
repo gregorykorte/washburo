@@ -1,12 +1,16 @@
-<!doctype html>
+\<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>washburo admin</title>
-    <!-- Local bundles only -->
-    <script src="/admin/decap-cms.js"></script>
-    <script src="/admin/init.js"></script>
   </head>
-  <body></body>
+  <body>
+    <!-- Optional root that some CMS versions look for -->
+    <div id="nc-root"></div>
+
+    <!-- Load after the document is parsed -->
+    <script src="/admin/decap-cms.js" defer></script>
+    <script src="/admin/init.js" defer></script>
+  </body>
 </html>
