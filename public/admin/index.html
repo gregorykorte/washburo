@@ -4,26 +4,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>washburo admin</title>
+    <!-- Local, vendored Decap bundle (not CDN) -->
     <script src="/admin/decap-cms.js"></script>
   </head>
   <body>
     <script>
+      // Force manual init and wait until CMS is ready
       window.CMS_MANUAL_INIT = true;
-      (async () => {
-        try {
-          // sanity: prove CMS is loaded and config is reachable
-          console.log("CMS present?", typeof window.CMS);
-          const res = await fetch("/admin/config.yml", { cache: "no-store" });
-          console.log("config.yml status", res.status);
-          if (!res.ok) throw new Error("config load failed");
-          // kick off the UI
+
+      (function waitForCMS(attempts = 200) {
+        if (window.CMS && typeof window.CMS.init === "function") {
           window.CMS.init({ config: "/admin/config.yml" });
-        } catch (e) {
-          console.error("Decap bootstrap error:", e);
-          const pre = document.createElement("pre");
-          pre.textContent = "Decap bootstrap error: " + (e && e.message ? e.message : e);
-          document.body.appendChild(pre);
+          return;
         }
+        if (attempts <= 0) {
+          console.error("Decap CMS failed to load.");
+          const pre = document.createElement("pre");
+          pre.textContent = "Decap CMS failed to load. Check /admin/decap-cms.js and /admin/config.yml.";
+          document.body.appendChild(pre);
+          return;
+        }
+        setTimeout(() => waitForCMS(attempts - 1), 50);
       })();
     </script>
   </body>
