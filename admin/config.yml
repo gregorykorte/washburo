@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: YOUR-USER/washburo
+  repo: gregorykorte/washburo
   branch: main
   base_url: /api/decap-auth
   auth_endpoint: auth
@@ -31,3 +31,14 @@ collections:
       - { name: lede, label: Lede }
       - { name: timestamp, label: Timestamp, widget: datetime }
       - { name: source, label: Source, required: false }
+  - name: pages
+    label: Pages
+    folder: content/pages
+    create: true
+    slug: "{{slug}}"
+    format: frontmatter
+    fields:
+      - { name: title, label: Title }
+      - { name: slug, label: Slug }
+      - { name: body, label: Body, widget: markdown }
+

@@ -1,13 +1,14 @@
 ---
-const today = new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+const today = new Date().toLocaleDateString('en-US', {
+  weekday:'long', month:'long', day:'numeric', year:'numeric'
+});
 ---
 <header class="container" style="padding:1rem 0;border-bottom:var(--hairline)">
   <div style="display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap">
-    <a href="/" style="text-decoration:none;color:inherit">
-      <h1 style="font-size:var(--step-3);letter-spacing:.02em">washburo</h1>
-    </a>
-    <span class="pill smallcaps">WASHINGTON BUREAU</span>
+    <h1 style="margin:0">
+      <a href="/" class="pill-brand" aria-label="washburo home">washburo</a>
+    </h1>
     <span class="timestamp" aria-label="date">{today}</span>
-    <span class="pill" title="wire light">●</span>
   </div>
+  <div class="tagline">Dispatches and data from Washington</div>
 </header>

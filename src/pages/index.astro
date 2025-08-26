@@ -24,7 +24,7 @@ const lead = dispatches.sort((a,b)=>new Date(b.data.date)-new Date(a.data.date))
     </article>
 
     <aside>
-      <h2 class="smallcaps">BRIEFS</h2>
+      <h2 class="smallcaps">WIRE</h2>
       {briefs
         .sort((a,b)=>new Date(b.data.timestamp)-new Date(a.data.timestamp))
         .slice(0,6)

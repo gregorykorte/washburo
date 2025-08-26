@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/briefs",
+  "definitions": {
+    "briefs": {
+      "type": "object",
+      "properties": {
+        "hed": {
+          "type": "string"
+        },
+        "lede": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hed",
+        "lede",
+        "timestamp"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

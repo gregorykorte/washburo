@@ -9,6 +9,7 @@
   /* Typography */
   --serif: "Source Serif 4", ui-serif, Georgia, serif;
   --display: "Newsreader", "Charter", ui-serif, Georgia, serif;
+  --sans: ui-sans-serif, system-ui, "Inter", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Scale */
@@ -26,12 +27,58 @@
   --hairline: 1px dotted var(--slate);
 }
 
+/* responsive gutter for mobile */
+@media (max-width: 600px) {
+  :root {
+    --gutter: 1.5rem; /* wider padding on narrow screens */
+  }
+}
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
 img{max-width:100%;height:auto}
 
+/* Generic pills */
 .smallcaps{font-variant-caps: all-small-caps; letter-spacing:.04em}
-.pill{border:1px solid var(--slate); padding:.12rem .4rem; border-radius:999px; font: 600 var(--step--1)/1 var(--mono);}
+.pill{
+  border:1px solid var(--slate);
+  padding:.12rem .4rem;
+  border-radius:999px;
+  font: 600 var(--step--1)/1 var(--mono);
+}
+
+/* Brand pill */
+.pill-brand{
+  display:inline-block;
+  border:1px solid var(--slate);
+  border-radius:999px;
+  padding:.35rem .9rem .45rem;
+  font-family: var(--sans);
+  font-weight:700;
+  font-size: var(--step-3);
+  letter-spacing:.02em;
+  text-decoration:none;
+  color:inherit;
+  background:transparent;
+}
+
+/* scale brand pill down on small screens */
+@media (max-width: 600px) {
+  .pill-brand {
+    font-size: var(--step-2);
+  }
+}
+
+/* Teletype tagline */
+.tagline{
+  font-family: var(--mono);
+  font-size: var(--step--1);
+  letter-spacing:.03em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-top:.35rem;
+}
+
 .hr{border:0;border-top:var(--hairline);}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
 .grid{display:grid;gap:1.25rem}
