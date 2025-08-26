@@ -1,4 +1,4 @@
-\<!doctype html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -6,11 +6,8 @@
     <title>washburo admin</title>
   </head>
   <body>
-    <!-- Optional root that some CMS versions look for -->
     <div id="nc-root"></div>
-
-    <!-- Load after the document is parsed -->
-    <script src="/admin/decap-cms.js" defer></script>
-    <script src="/admin/init.js" defer></script>
+    <!-- v2 UMD auto-detects /admin/config.yml; no manual init needed -->
+    <script src="/admin/cms.js"></script>
   </body>
 </html>
