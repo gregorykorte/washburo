@@ -4,24 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>washburo admin</title>
-    <!-- Local, vendored Decap bundle (not CDN) -->
     <script src="/admin/decap-cms.js"></script>
   </head>
   <body>
     <script>
-      // Force manual init and wait until CMS is ready
+      // Work with Decap 3 (DecapCms) and older CMS (CMS) globals
       window.CMS_MANUAL_INIT = true;
 
       (function waitForCMS(attempts = 200) {
-        if (window.CMS && typeof window.CMS.init === "function") {
-          window.CMS.init({ config: "/admin/config.yml" });
+        const CMS = window.CMS || window.DecapCms;
+        if (CMS && typeof CMS.init === "function") {
+          // Optional alias for plugins that expect window.CMS
+          if (!window.CMS && window.DecapCms) window.CMS = window.DecapCms;
+
+          CMS.init({ config: "/admin/config.yml" });
           return;
         }
         if (attempts <= 0) {
           console.error("Decap CMS failed to load.");
-          const pre = document.createElement("pre");
-          pre.textContent = "Decap CMS failed to load. Check /admin/decap-cms.js and /admin/config.yml.";
-          document.body.appendChild(pre);
+          document.body.innerHTML =
+            "<pre>Decap CMS failed to load. Check /admin/decap-cms.js and /admin/config.yml.</pre>";
           return;
         }
         setTimeout(() => waitForCMS(attempts - 1), 50);
