@@ -6,5 +6,25 @@
     <title>washburo admin</title>
     <script src="/admin/decap-cms.js"></script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+      (async () => {
+        try {
+          // sanity: prove CMS is loaded and config is reachable
+          console.log("CMS present?", typeof window.CMS);
+          const res = await fetch("/admin/config.yml", { cache: "no-store" });
+          console.log("config.yml status", res.status);
+          if (!res.ok) throw new Error("config load failed");
+          // kick off the UI
+          window.CMS.init({ config: "/admin/config.yml" });
+        } catch (e) {
+          console.error("Decap bootstrap error:", e);
+          const pre = document.createElement("pre");
+          pre.textContent = "Decap bootstrap error: " + (e && e.message ? e.message : e);
+          document.body.appendChild(pre);
+        }
+      })();
+    </script>
+  </body>
 </html>
