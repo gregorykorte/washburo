@@ -4,10 +4,7 @@ export async function onRequest({ request, env }: { request: Request; env: Recor
   const code = url.searchParams.get("code");
   if (!code) return new Response("Missing ?code", { status: 400 });
 
-  // Preserve state if GitHub echoed it back (Decap may expect it)
-  const state = url.searchParams.get("state") || "";
-
-  const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
+  const res = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -17,8 +14,7 @@ export async function onRequest({ request, env }: { request: Request; env: Recor
       redirect_uri: `${origin}/api/decap-auth/callback`,
     }),
   });
-
-  const data = await tokenRes.json();
+  const data = await res.json();
   if (!data.access_token) {
     return new Response(JSON.stringify({ error: "oauth_exchange_failed", detail: data }), {
       status: 400,
@@ -26,43 +22,34 @@ export async function onRequest({ request, env }: { request: Request; env: Recor
     });
   }
 
-  const payload = { token: data.access_token, provider: "github", state };
+  const payload = { token: data.access_token, provider: "github" };
 
-  // Minimal HTML that waits for the CMS handshake and replies with the token.
   const html = `<!doctype html><meta charset="utf-8">
 <script>
 (function () {
   var origin = ${JSON.stringify(origin)};
   var payload = ${JSON.stringify(payload)};
 
-  function cleanup() {
-    try { window.close(); } catch (e) {}
-    document.body.innerHTML = '<p>Authentication complete. You can close this window.</p>';
-  }
-
-  // Fallback: place token where CMS looks on same origin, in case postMessage is missed.
+  // 1) Write tokens where the CMS looks (same origin)
   try {
     localStorage.setItem('decap-cms-auth', JSON.stringify(payload));
     localStorage.setItem('netlify-cms-user', JSON.stringify(payload));
   } catch (e) {}
 
-  function receive(e) {
-    try {
-      if (typeof e.data === 'string' && e.data.indexOf('authorizing:github') === 0) {
-        e.source.postMessage('authorization:github:success:' + JSON.stringify(payload), e.origin);
-        window.removeEventListener('message', receive, false);
-        cleanup();
-      }
-    } catch (err) {}
-  }
-  window.addEventListener('message', receive, false);
+  // 2) Tell the opener we've succeeded (both strict + wildcard target)
+  try {
+    var to = window.opener || window.parent;
+    if (to) {
+      try { to.postMessage('authorization:github:success:' + JSON.stringify(payload), origin); } catch (e) {}
+      try { to.postMessage('authorization:github:success:' + JSON.stringify(payload), '*'); } catch (e) {}
+      // 3) Force the admin pane to re-read localStorage and init
+      try { to.location.reload(); } catch (e) {}
+    }
+  } catch (e) {}
 
-  // Kick off the handshake so the opener knows we're ready
-  try { (window.opener || window.parent).postMessage('authorizing:github', origin); } catch (e) {}
-  try { (window.opener || window.parent).postMessage('authorizing:github', '*'); } catch (e) {}
-
-  // Safety: close after a moment even if no response (CMS will read localStorage on reload)
-  setTimeout(cleanup, 1500);
+  // Close (leave a fallback message if not closable)
+  try { window.close(); } catch (e) {}
+  document.body.innerHTML = '<p>Authentication complete. You can close this window.</p>';
 })();
 </script>`;
   return new Response(html, {
