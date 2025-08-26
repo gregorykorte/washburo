@@ -4,30 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>washburo admin</title>
+    <!-- Local bundles only -->
     <script src="/admin/decap-cms.js"></script>
+    <script src="/admin/init.js"></script>
   </head>
-  <body>
-    <script>
-      // Work with Decap 3 (DecapCms) and older CMS (CMS) globals
-      window.CMS_MANUAL_INIT = true;
-
-      (function waitForCMS(attempts = 200) {
-        const CMS = window.CMS || window.DecapCms;
-        if (CMS && typeof CMS.init === "function") {
-          // Optional alias for plugins that expect window.CMS
-          if (!window.CMS && window.DecapCms) window.CMS = window.DecapCms;
-
-          CMS.init({ config: "/admin/config.yml" });
-          return;
-        }
-        if (attempts <= 0) {
-          console.error("Decap CMS failed to load.");
-          document.body.innerHTML =
-            "<pre>Decap CMS failed to load. Check /admin/decap-cms.js and /admin/config.yml.</pre>";
-          return;
-        }
-        setTimeout(() => waitForCMS(attempts - 1), 50);
-      })();
-    </script>
-  </body>
+  <body></body>
 </html>
