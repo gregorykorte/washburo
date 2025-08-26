@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import WireItem from "../components/WireItem.astro";
+import SlugLine from "../components/SlugLine.astro";
+import Dateline from "../components/Dateline.astro";
+import { getCollection } from 'astro:content';
+const briefs = await getCollection('briefs');
+const dispatches = await getCollection('dispatch');
+const lead = dispatches.sort((a,b)=>new Date(b.data.date)-new Date(a.data.date))[0];
+---
+<Base>
+  <section class="grid grid-rail">
+    <article class="prose">
+      <SlugLine />
+      <h2 class="smallcaps">DISPATCH</h2>
+      {lead && (
+        <div>
+          <h1 style="margin:.25rem 0">{lead.data.title}</h1>
+          {lead.data.dek && <p class="lede">{lead.data.dek}</p>}
+          <p><Dateline city={lead.data.city || 'WASHINGTON'} /> <time datetime={lead.data.date}>{new Date(lead.data.date).toLocaleDateString()}</time></p>
+          <p><a href={`/dispatch/${lead.slug}`}>Read the dispatch →</a></p>
+        </div>
+      )}
+    </article>
+
+    <aside>
+      <h2 class="smallcaps">BRIEFS</h2>
+      {briefs
+        .sort((a,b)=>new Date(b.data.timestamp)-new Date(a.data.timestamp))
+        .slice(0,6)
+        .map(({data, slug}) => (
+          <WireItem hed={data.hed} lede={data.lede} href={`/briefs#${slug}`} timestamp={data.timestamp} source={data.source} />
+      ))}
+      <p style="margin-top:.75rem"><a href="/briefs">More briefs →</a></p>
+    </aside>
+  </section>
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from './Base.astro';
+import Dateline from '../components/Dateline.astro';
+import SlugLine from '../components/SlugLine.astro';
+export interface Props{ title:string; dek?:string; city?:string; byline?:string; date?:string }
+const { title, dek, city='WASHINGTON', byline='By Staff', date=new Date().toISOString() } = Astro.props;
+---
+<Base>
+  <article class="prose">
+    <SlugLine />
+    <h1>{title}</h1>
+    {dek && <p class="lede">{dek}</p>}
+    <p class="byline">{byline}</p>
+    <p><Dateline city={city} /> <time datetime={date}>{new Date(date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</time></p>
+    <slot />
+  </article>
+</Base>

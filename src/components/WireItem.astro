@@ -1,0 +1,10 @@
+---
+export interface Props{ hed:string; lede:string; href?:string; timestamp?:string; source?:string }
+const { hed, lede, href = '#', timestamp = new Date().toISOString(), source } = Astro.props;
+---
+<article style="padding:.5rem 0;border-bottom:var(--hairline)">
+  <div class="timestamp">{new Date(timestamp).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit', timeZone:'America/New_York'})} ET</div>
+  <h3 style="margin:.25rem 0"><a href={href} style="text-decoration:none;color:inherit">{hed}</a></h3>
+  <p class="lede" style="margin:0">{lede}</p>
+  {source && <div class="slugline">Source: {source}</div>}
+</article>

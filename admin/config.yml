@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: YOUR-USER/washburo
+  branch: main
+  base_url: /api/decap-auth
+  auth_endpoint: auth
+media_folder: public/uploads
+public_folder: /uploads
+collections:
+  - name: dispatch
+    label: Dispatch
+    folder: content/dispatch
+    create: true
+    slug: "{{slug}}"
+    format: frontmatter
+    fields:
+      - { name: title, label: Title }
+      - { name: dek, label: Dek, required: false }
+      - { name: city, label: City, default: WASHINGTON }
+      - { name: byline, label: Byline, default: By Gregory Korte }
+      - { name: date, label: Date, widget: datetime }
+      - { name: body, label: Body, widget: markdown }
+  - name: briefs
+    label: Briefs
+    folder: content/briefs
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    format: frontmatter
+    fields:
+      - { name: hed, label: Hed }
+      - { name: lede, label: Lede }
+      - { name: timestamp, label: Timestamp, widget: datetime }
+      - { name: source, label: Source, required: false }

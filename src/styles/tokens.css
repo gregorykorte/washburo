@@ -1,0 +1,38 @@
+:root{
+  /* Palette */
+  --ink: #12223A;        /* Navy */
+  --oxblood: #7B2D2D;    
+  --slate: #5B6770;
+  --paper: #FAF7F2;      /* Background */
+  --sheet: #F0F1F3;      /* Cards */
+
+  /* Typography */
+  --serif: "Source Serif 4", ui-serif, Georgia, serif;
+  --display: "Newsreader", "Charter", ui-serif, Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Scale */
+  --step--1: 0.9rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.375rem;
+  --step-3: 1.75rem;
+  --step-4: 2.25rem;
+  --step-5: 3rem;
+
+  /* Layout */
+  --maxw: 68ch;
+  --gutter: 1rem;
+  --hairline: 1px dotted var(--slate);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+img{max-width:100%;height:auto}
+
+.smallcaps{font-variant-caps: all-small-caps; letter-spacing:.04em}
+.pill{border:1px solid var(--slate); padding:.12rem .4rem; border-radius:999px; font: 600 var(--step--1)/1 var(--mono);}
+.hr{border:0;border-top:var(--hairline);}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+.grid{display:grid;gap:1.25rem}
+@media(min-width:900px){.grid-rail{grid-template-columns:2fr 1fr}}

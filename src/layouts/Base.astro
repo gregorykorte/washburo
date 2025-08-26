@@ -1,0 +1,30 @@
+---
+import '../styles/tokens.css';
+import '../styles/typography.css';
+import '../styles/prose.css';
+import Masthead from "../components/Masthead.astro";
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>washburo</title>
+  </head>
+  <body>
+    <Masthead />
+    <main class="container" style="padding:1rem 0">
+      <slot />
+    </main>
+    <footer class="container" style="border-top:var(--hairline);padding:1rem 0;margin-top:2rem">
+      <nav style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="/about">About</a>
+        <a href="/rss.xml">RSS</a>
+        <a href="/corrections">Corrections</a>
+        <a href="/ethics">Ethics</a>
+      </nav>
+      <div class="slugline" style="margin-top:.5rem">© {new Date().getFullYear()} Washburo</div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+.prose p{margin:.75rem 0}
+.prose a{color:var(--oxblood);text-decoration-thickness: .06em}
+.prose blockquote{border-left:3px solid var(--slate);margin:1rem 0;padding:.5rem 1rem;color:var(--slate)}
+.prose hr{border:0;border-top:var(--hairline);margin:1.25rem 0}

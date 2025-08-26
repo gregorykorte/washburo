@@ -1,0 +1,15 @@
+---
+import Briefs from "../layouts/Briefs.astro";
+import WireItem from "../components/WireItem.astro";
+import { getCollection } from 'astro:content';
+const briefs = await getCollection('briefs');
+---
+<Briefs>
+  {briefs
+    .sort((a,b)=>new Date(b.data.timestamp)-new Date(a.data.timestamp))
+    .map(({data, slug}) => (
+      <div id={slug}>
+        <WireItem hed={data.hed} lede={data.lede} timestamp={data.timestamp} source={data.source} />
+      </div>
+  ))}
+</Briefs>

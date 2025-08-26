@@ -1,0 +1,12 @@
+---
+import Story from "../../layouts/Story.astro";
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const posts = await getCollection('dispatch');
+  return posts.map((p)=>({ params:{ slug: p.slug }, props:{ post: p } }));
+}
+const { post } = Astro.props;
+---
+<Story title={post.data.title} dek={post.data.dek} city={post.data.city} byline={post.data.byline} date={post.data.date}>
+  <div class="prose" set:html={post.body} />
+</Story>

@@ -1,0 +1,7 @@
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0 0 .5rem}
+body{font-family:var(--serif);font-size:var(--step-0);line-height:1.6}
+.lede{font-size:var(--step-1);color:var(--slate)}
+.byline{font-family:var(--serif);font-style:italic;color:var(--slate)}
+.dateline{font-family:var(--serif);font-weight:700}
+.slugline{font-family:var(--mono);font-size:var(--step--1);letter-spacing:.02em;color:var(--slate)}
+.timestamp{font-family:var(--mono);font-size:var(--step--1);color:var(--slate)}
