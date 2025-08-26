@@ -4,8 +4,10 @@ backend:
   branch: main
   base_url: /api/decap-auth
   auth_endpoint: auth
+
 media_folder: public/uploads
 public_folder: /uploads
+
 collections:
   - name: dispatch
     label: Dispatch
@@ -20,6 +22,7 @@ collections:
       - { name: byline, label: Byline, default: By Gregory Korte }
       - { name: date, label: Date, widget: datetime }
       - { name: body, label: Body, widget: markdown }
+
   - name: briefs
     label: Briefs
     folder: content/briefs
@@ -31,6 +34,7 @@ collections:
       - { name: lede, label: Lede }
       - { name: timestamp, label: Timestamp, widget: datetime }
       - { name: source, label: Source, required: false }
+
   - name: pages
     label: Pages
     folder: content/pages
@@ -41,4 +45,3 @@ collections:
       - { name: title, label: Title }
       - { name: slug, label: Slug }
       - { name: body, label: Body, widget: markdown }
-
